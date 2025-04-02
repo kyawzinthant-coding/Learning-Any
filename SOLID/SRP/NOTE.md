@@ -1,0 +1,3 @@
+## The Single Responsibility Principle
+
+ In SRP principle, a class should be open to one and only one reason to change. The principle makes sure that a class is only focus on single task. If a code is tightly coupled and violate to SRP, it results in making hard for code refactoring and increase technical debt.If a single glass has multiple responsibilites , It can increase software complexity which can lead to unintended side effects, making hard to debug and test code. By isolating responsibilities, SRP improves cohesion and promotes modularity, making software systems easier to scale.
