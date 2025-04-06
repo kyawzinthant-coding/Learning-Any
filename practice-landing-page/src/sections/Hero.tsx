@@ -10,9 +10,7 @@ export const Hero = () => {
       <div className="container">
         <div className="md:flex items-center">
           <div className="md:w-[478px]">
-            <div className="text-sm inline-flex border border-[#222]/10 px-3 py-1 rounded-lg tracking-tighter">
-              Version 2.0 is here{" "}
-            </div>
+            <div className="tag">Version 2.0 is here </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] bg-clip-text text-transparent mt-6">
               Pathway to productivity
             </h1>
@@ -35,7 +33,7 @@ export const Hero = () => {
             <Image
               src={cogImage}
               alt="cog image"
-              className="md:absolute md:h-full md:w-auto md:max-w-none md:-left-6 lg:left-0"
+              className="md:absolute md:h-full md:w-auto md:max-w-none md:-left-6 lg:left"
             />
             <Image
               src={cylinderImage}
