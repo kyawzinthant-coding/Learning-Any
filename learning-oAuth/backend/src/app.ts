@@ -2,6 +2,10 @@ import express from "express";
 import { auth, requiresAuth } from "express-openid-connect";
 import cors from "cors";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 export const app = express();
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -10,10 +14,11 @@ app.use(express.json());
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: "a long, randomly-generated string stored in env",
-  baseURL: "http://localhost:3000",
-  clientID: "Uhvf8rIPIweeJvM5KTbn2yk279SlJmBk",
-  issuerBaseURL: "https://dev-ig355dx0qv20orkp.us.auth0.com",
+  secret: process.env.AUTH0_SECRET!,
+  baseURL: process.env.AUTH0_BASE_URL,
+  clientID: process.env.AUTH0_CLIENT_ID!,
+  AUTH0_ISSUER_BASE_URL: process.env.AUTH0_ISSUER_BASE_URL!,
+  clientSecret: process.env.AUTH0_CLIENT_SECRET,
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
