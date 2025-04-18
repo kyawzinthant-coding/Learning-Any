@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 
 import dotenv from "dotenv";
 import axios from "axios";
+import { authMiddleware } from "./authMiddleware";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -12,16 +14,17 @@ export const app = express();
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: process.env.AUTH0_SECRET!,
-  baseURL: process.env.AUTH0_BASE_URL,
-  clientID: process.env.AUTH0_CLIENT_ID!,
-  issuerBaseURL: process.env.AUTH0_DOMAIN!,
-  clientSecret: process.env.AUTH0_CLIENT_SECRET,
-};
+// const config = {
+//   authRequired: false,
+//   auth0Logout: true,
+//   secret: process.env.AUTH0_SECRET!,
+//   baseURL: process.env.AUTH0_BASE_URL,
+//   clientID: process.env.AUTH0_CLIENT_ID!,
+//   issuerBaseURL: process.env.AUTH0_DOMAIN!,
+//   clientSecret: process.env.AUTH0_CLIENT_SECRET,
+// };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 // app.use(auth(config));
@@ -72,7 +75,7 @@ app.get("/api/auth/callback", async (req, res) => {
   console.log("user info decoded", userInfo);
 
   // Save token/session in cookie (or your strategy)
-  res.cookie("session", access_token, { httpOnly: true });
+  res.cookie("session", id_token, { httpOnly: true });
 
   res.redirect("http://localhost:3000");
 });
@@ -86,4 +89,9 @@ app.get("/api/auth/logout", (req, res) => {
     `returnTo=${returnTo}`;
 
   res.redirect(logoutUrl);
+});
+
+app.get("/api/auth/me", authMiddleware, (req: any, res) => {
+  console.log("user info", req.user);
+  res.json({ user: req.user });
 });
